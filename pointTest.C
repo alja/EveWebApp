@@ -30,8 +30,10 @@ REX::REvePointSet *createPointSet(int npoints = 2, float s = 2, int color = 28)
 
 void pointTest()
 {
-   auto eveMng = REX::REveManager::Create("file:currentdir/xxx.html", "/home/alja/root-dev/test-gui/ui5/");
-
+   auto eveMng = REX::REveManager::Create();
+   eveMng->AddLocation("mydir/", "/home/alja/root-dev/EveWebApp/ui5");
+   eveMng->SetDefaultHtmlPage("file:mydir/xxx.html");
+ 
    REX::REveElement *event = eveMng->GetEventScene();
    auto ps = createPointSet(100);
    event->AddElement(ps);

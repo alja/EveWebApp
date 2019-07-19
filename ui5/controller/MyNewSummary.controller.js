@@ -3,7 +3,7 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 ], function(SummaryController, EveManager) {
    "use strict";    
 
-   return SummaryController.extend("currentdir.MyNewSummary", {                    
+   return SummaryController.extend("custom.MyNewSummary", {                    
 
       onInit: function() {
                        SummaryController.prototype.onInit.apply(this, arguments);

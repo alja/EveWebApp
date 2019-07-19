@@ -3,7 +3,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
 ], function(MainController, EveManager) {
    "use strict";    
 
-   return MainController.extend("currentdir.MyNewMain", {                    
+   return MainController.extend("custom.MyNewMain", {                    
 
       onInit: function() {
                        MainController.prototype.onInit.apply(this, arguments);

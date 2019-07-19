@@ -1,0 +1,7 @@
+
+WebGui.HttpPort:            9096
+WebGui.RootUi5Path: /home/alja/root-dev/offi/root/ui5
+HttpServ.JSRootPath: /home/alja/root-dev/offi/root/js
+
+
+WebEve.DisableShow: 1

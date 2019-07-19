@@ -470,8 +470,9 @@ public:
 
 void collection_proxies_test(bool proj=true)
 {
-   //  eveMng = REX::REveManager::Create();
-   eveMng = REX::REveManager::Create("file:currentdir/xxx.html", "/home/alja/root-dev/test-gui/");
+   eveMng = REX::REveManager::Create();
+   eveMng->AddLocation("mydir/", "/home/alja/root-dev/EveWebApp/ui5");
+   eveMng->SetDefaultHtmlPage("file:mydir/xxx.html");
    
    auto event = new Event();
    event->Create();
