@@ -110,8 +110,8 @@ public:
          double py = pt * std::sin(phi);
          double pz = pt * (1. / (std::tan(2*std::atan(std::exp(-eta)))));
 
-         printf("Event::MakeParticles %2d: pt=%.2f, eta=%.2f, phi=%.2f\n", i, pt, eta, phi);
-
+         // printf("Event::MakeParticles %2d: pt=%.2f, eta=%.2f, phi=%.2f\n", i, pt, eta, phi);
+         
          auto particle = new TParticle(0, 0, 0, 0, 0, 0,
                                        px, py, pz, std::sqrt(px*px + py*py + pz*pz + 80*80),
                                        0, 0, 0, 0 );
@@ -134,8 +134,8 @@ public:
 
    void Create() {
       Clear();
-      MakeJets(4);
-      MakeParticles(10);
+      MakeJets(14);
+      MakeParticles(100);
       eventId++;
    }
 };
@@ -363,8 +363,10 @@ public:
       m_inEventLoading = false;
    }
 
-   void addCollection(REX::REveDataCollection* collection, bool makeTable)
+   void addCollection(REX::REveDataCollection* collection, bool showInTable)
    {
+      m_collections->AddElement(collection);
+      
       // load data
       LoadCurrentEvent(collection);
 
@@ -385,28 +387,26 @@ public:
       m_builders.push_back(glBuilder);
       glBuilder->Build();
 
-      if (makeTable) {
-         // Table view types      {
-         auto tableBuilder = new REX::REveTableProxyBuilder();
-         tableBuilder->SetHaveAWindow(true);
-         tableBuilder->SetCollection(collection);
-         REX::REveElement* tablep = tableBuilder->CreateProduct("table-type", m_viewContext);
+      // Table view types
+      auto tableBuilder = new REX::REveTableProxyBuilder();
+      tableBuilder->SetHaveAWindow(true);
+      tableBuilder->SetCollection(collection);
+      REX::REveElement* tablep = tableBuilder->CreateProduct("table-type", m_viewContext);
+      auto tableMng =  m_viewContext->GetTableViewInfo();
 
-         auto tableMng =  m_viewContext->GetTableViewInfo();
+      if (showInTable) {
          tableMng->SetDisplayedCollection(collection->GetElementId());
-         tableMng->AddDelegate([=](REX::ElementId_t elId) { tableBuilder->DisplayedCollectionChanged(elId); });
-
-         for (REX::REveScene* scene : m_scenes) {
-            if (strncmp(scene->GetCTitle(), "Table", 5) == 0) {
-               scene->AddElement(tablep);
-               tableBuilder->Build(collection, tablep, m_viewContext );
-            }
          }
-
-         m_builders.push_back(tableBuilder);
+   
+      tableMng->AddDelegate([=]() { tableBuilder->ConfigChanged(); });
+      for (REX::REveScene* scene : m_scenes) {
+         if (strncmp(scene->GetCTitle(), "Table", 5) == 0) {
+            scene->AddElement(tablep);
+            tableBuilder->Build(collection, tablep, m_viewContext );
+         }
       }
+      m_builders.push_back(tableBuilder);
 
-      m_collections->AddElement(collection);
       collection->SetHandlerFunc([&] (REX::REveDataCollection* collection) { this->CollectionChanged( collection ); });
       collection->SetHandlerFuncIds([&] (REX::REveDataCollection* collection, const REX::REveDataCollection::Ids_t& ids) { this->ModelChanged( collection, ids ); });
    }
@@ -447,9 +447,11 @@ class EventManager : public REX::REveElement
 private:
    Event* m_event;
    XYManager* m_xymng;
-
+   bool m_play;
+   time_t m_time;
+   int cnt;
 public:
-   EventManager(Event* e, XYManager* m): m_event(e), m_xymng(m) {}
+   EventManager(Event* e, XYManager* m): m_event(e), m_xymng(m), m_play(true) { time(&m_time); cnt = 0;}
 
    virtual ~EventManager() {}
 
@@ -458,11 +460,25 @@ public:
       m_event->Create();
       m_xymng->NextEvent();
    }
+   virtual void Hello() {
+      printf("HELooooooooooooooogggggggggggggggggggggggggggggggggggggggggggggggg\n");
 
+      time_t now;
+      time(&now);
+      double a = difftime(now, m_time);
+
+      printf("cnt %d  difftime %f\n", cnt, a);
+      // m_time = now;
+      cnt++;
+      if (m_play) NextEvent();
+   }
    virtual void QuitRoot()
    {
       printf("Quit ROOT\n");
       if (gApplication) gApplication->Terminate();
+   }
+   virtual void Stop() {
+      m_play = false;
    }
 };
 
@@ -471,9 +487,14 @@ public:
 void collection_proxies_test(bool proj=true)
 {
    eveMng = REX::REveManager::Create();
-   eveMng->AddLocation("mydir/", "/home/alja/root-dev/EveWebApp/ui5");
+   eveMng->SetClientVersion("00.01");
+   std::string locName = "mydir/";
+   std::string locPath = "/home/alja/root-dev/EveWebApp/ui5";
+   eveMng->AddLocation(locName, locPath);
+   //   std::string htmlFile = "file:mydir/xxx.html";
    eveMng->SetDefaultHtmlPage("file:mydir/xxx.html");
    
+
    auto event = new Event();
    event->Create();
 
@@ -482,6 +503,11 @@ void collection_proxies_test(bool proj=true)
    // debug settings
    auto xyManager = new XYManager(event);
 
+   auto eventMng = new EventManager(event, xyManager);
+   eventMng->SetName("EventManager");
+   eveMng->GetWorld()->AddElement(eventMng);
+
+   printf("Event manager ID======== %d\n", eventMng->GetElementId());
    if (1) {
       REX::REveDataCollection* trackCollection = new REX::REveDataCollection("XYTracks");
       trackCollection->SetItemClass(TParticle::Class());
@@ -496,13 +522,9 @@ void collection_proxies_test(bool proj=true)
       jetCollection->SetMainColor(kRed);
       xyManager->addCollection(jetCollection, false);
    }
-
-   auto eventMng = new EventManager(event, xyManager);
-   eventMng->SetName("EventManager");
-   eveMng->GetWorld()->AddElement(eventMng);
-
    eveMng->GetWorld()->AddCommand("QuitRoot", "sap-icon://log", eventMng, "QuitRoot()");
    eveMng->GetWorld()->AddCommand("NextEvent", "sap-icon://step", eventMng, "NextEvent()");
+   eveMng->GetWorld()->AddCommand("NextEvent", "sap-icon://stop", eventMng, "Stop()");
 
    eveMng->Show();
 }
