@@ -38,17 +38,17 @@
             "routes": [{
                 "name": "Default",
                 "pattern": "",
-                "target": ["Main"]
+                "target": ["MyMain"]
             }, {
                 "name": "View",
                 "pattern": "view/:viewName:",
                 "target": ["GL"]
             }],
             "targets": {
-                "Main": {
+                "MyMain": {
                     "transition": "slide",
                     "clearAggregation": false,
-                    "viewName": "Main"
+                    "viewName": "MyMain"
                 },
                 "GL": {
                     "transition": "slide",

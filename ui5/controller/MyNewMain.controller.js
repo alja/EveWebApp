@@ -13,7 +13,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
 	 console.log("register my controller for init");
          this.mgr.RegisterController(this);
       },
-          OnWebsocketMsg : function(handle, msg, offset)
+      OnWebsocketMsg : function(handle, msg, offset)
       {
          if ( typeof msg == "string") {
             if ( msg.substr(0,4) == "FW2_") {
@@ -25,7 +25,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          }
          this.mgr.OnWebsocketMsg(handle, msg, offset);
       },
-   
+      
       showHelp : function(oEvent) {
          alert("=====User support: fireworks@cern.ch");
       }
