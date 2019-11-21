@@ -4,7 +4,7 @@
           xmlns:mvc="sap.ui.core.mvc"
           xmlns:l="sap.ui.layout"
           xmlns:commons="sap.ui.commons">
-   <Page title="Fireworks" showNavButton="false" showFooter="false"
+   <Page title="ABC" showNavButton="false" showFooter="false"
          showHeader="true" 
          showSubHeader="false" id="CanvasMainPage">
      <customHeader>
@@ -69,7 +69,7 @@
             </MenuButton>
          </contentLeft>
          <contentMiddle>
-                <FormattedText id="centerTitle" htmlText="CMS Event Display"/>
+                <FormattedText id="centerTitle" htmlText="ABC Event Display"/>
          </contentMiddle>
          <contentRight>
            <Image src="mydir/logo-fireworks.png"

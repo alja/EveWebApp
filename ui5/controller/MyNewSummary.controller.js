@@ -7,12 +7,13 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 
       onInit: function() {
                        SummaryController.prototype.onInit.apply(this, arguments);
-         this.expandLevel = 0;
+         this.expandLevel = 1;
       },
       event: function(lst) {
          SummaryController.prototype.event( lst);
           oTree.expandToLevel(0);
       },
+      /*
       createSummaryModel: function(tgt, src) {
          if (tgt === undefined) {
             tgt = [];
@@ -44,6 +45,7 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 
          return tgt;
       },
+*/
       addCollection: function (evt){
          alert("add collection");
       }
