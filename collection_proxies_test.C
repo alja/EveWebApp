@@ -26,6 +26,7 @@
 #include <ROOT/REveViewer.hxx>
 #include <ROOT/REveViewContext.hxx>
 
+#include "TEnv.h"
 #include "TGeoTube.h"
 #include "TList.h"
 #include "TParticle.h"
@@ -263,15 +264,15 @@ public:
       // table specs
       auto tableInfo = new REX::REveTableViewInfo();
       tableInfo->table("TParticle").
-         column("pt", 1, "Pt").
-         column("eta", 3, "Eta").
-         column("phi", 3, "Phi");
+         column("pt", 1, "i.Pt()").
+         column("eta", 3, "i.Eta()").
+         column("phi", 3, "i.Phi()");
 
       tableInfo->table("XYJet").
-         column("eta", 1, "Eta").
-         column("phi", 1, "Phi").
-         column("etasize", 2, "GetEtaSize").
-         column("phisize", 2, "GetPhiSize");
+         column("eta", 1, "i.Eta()").
+         column("phi", 1, "i.Phi()").
+         column("etasize", 2, "i.GetEtaSize()").
+         column("phisize", 2, "i.GetPhiSize()");
 
       m_viewContext->SetTableViewInfo(tableInfo);
 
@@ -477,7 +478,8 @@ public:
 void collection_proxies_test(bool proj=true)
 {
    eveMng = REX::REveManager::Create();
-
+   
+   gEnv->SetValue("WebGui.HttpPort", 7799);
    std::string locPath = "/home/alja/root-dev/EveWebApp/ui5";
    eveMng->AddLocation("mydir/", locPath);
    eveMng->SetDefaultHtmlPage("file:mydir/xxx.html");
