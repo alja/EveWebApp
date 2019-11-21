@@ -5,6 +5,10 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
 
    return MainController.extend("custom.MyNewMain", {                    
 
+      OnWebsocketClosed : function() {
+         var elem = this.byId("centerTitle");
+         elem.setHtmlText("<strong style=\"color: red;\">Client Disconnected !</strong>");
+      },
       onInit: function() {
          console.log('MAIN CONTROLLER INIT 2');
          MainController.prototype.onInit.apply(this, arguments);
