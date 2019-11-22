@@ -303,7 +303,7 @@ public:
          rhoZView->AddScene(rhoZEventScene);
          m_scenes.push_back(rhoZEventScene);
 
-         auto pgeoScene = eveMng->SpawnNewScene("Projection Geometry","xxx");
+         auto pgeoScene = eveMng->SpawnNewScene("Projection Geometry","test");
          m_mngRhoZ->ImportElements(b1,pgeoScene );
          rhoZView->AddScene(pgeoScene);
       }
@@ -497,7 +497,7 @@ void collection_proxies_test(bool proj=true)
    gEnv->SetValue("WebGui.HttpPort", 7799);
    std::string locPath = "/home/alja/root-dev/EveWebApp/ui5";
    eveMng->AddLocation("mydir/", locPath);
-   eveMng->SetDefaultHtmlPage("file:mydir/xxx.html");
+   eveMng->SetDefaultHtmlPage("file:mydir/eventDisplay.html");
 
    auto event = new Event();
    event->Create();
