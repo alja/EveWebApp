@@ -1,17 +1,23 @@
 sap.ui.define(['rootui5/eve7/controller/Summary.controller',
-               'rootui5/eve7/lib/EveManager'
-], function(SummaryController, EveManager) {
+               'rootui5/eve7/lib/EveManager',
+               "sap/ui/model/json/JSONModel",
+               "sap/m/Table",
+               "sap/m/Column",
+               "sap/m/Text",               
+	       "sap/m/ColumnListItem",
+	       "sap/ui/model/Sorter"
+              ], function(SummaryController, EveManager, JSONModel, Table, Column, Text,ColumnListItem, Sorter) {
    "use strict";    
 
    return SummaryController.extend("custom.MyNewSummary", {                    
 
       onInit: function() {
-                       SummaryController.prototype.onInit.apply(this, arguments);
+         SummaryController.prototype.onInit.apply(this, arguments);
          this.expandLevel = 1;
       },
       event: function(lst) {
          SummaryController.prototype.event( lst);
-          oTree.expandToLevel(0);
+         oTree.expandToLevel(0);
       },
       /*
       createSummaryModel: function(tgt, src) {
@@ -44,10 +50,94 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
          }
 
          return tgt;
-      },
-*/
+         },
+      */
       addCollection: function (evt){
-         alert("add collection");
+         if (!this.table)
+            this.createTable();
+
+         if (!this.popover) {
+            this.popover = new sap.m.Popover();
+            this.popover.addContent(this.table);
+         }
+         this.popover.openBy(this.byId("addCollection"));
+      },
+      createTable: function() {
+	 // create some dummy JSON data
+	 var data = {
+	    names: [
+	       {firstName: "Peter", lastName: "Mueller"},
+	       {firstName: "Petra", lastName: "Maier"},
+	       {firstName: "Thomas", lastName: "Smith"},
+	       {firstName: "John", lastName: "Williams"},
+	       {firstName: "Maria", lastName: "Jones"}
+	    ]
+	 };
+
+	 // create a Model with this data
+	 var model = new JSONModel();
+	 model.setData(data);
+
+
+	 // create the UI
+
+	 // create a sap.m.Table control
+	 var table = new Table("tableTest",{
+	    columns: [
+	       new Column("lastName", {header: new Text({text: "Last Name"})}),
+	       new Column("firstName", {header: new Text({text: "First Name"})})
+	    ]
+	 });
+	 table.bActiveHeaders = true;
+
+	 table.attachEvent("columnPress", function(evt) {
+	    console.log("press paramerer", evt.getParameters());
+	    var par = evt.getParameters();
+            var order = par.column.getOrder();
+	    var sv = -1;
+
+	    // init first time ascend
+	    if (order == 0 ) {
+	       par.column.setOrder(1);
+	       sv = true;
+	    }
+
+	    //ascend
+	    else if (order == 1) {
+	       par.column.setOrder(-1);
+	       sv = false;
+	    }
+	    
+	    // desc
+	    else  if (order == -1){
+	       par.column.setOrder(1);
+	       sv = true;
+	    }
+	    var pn =  par.column.sId;
+	    var oSorter = new Sorter(pn, sv);
+	    
+	    var oItems = this.getBinding("items");
+	    oItems.sort(oSorter);
+
+	    var indicator = sv ?  sap.ui.core.SortOrder.Descending :  sap.ui.core.SortOrder.Ascending;
+	    par.column.setSortIndicator(indicator);
+	 });
+
+
+	 // bind the Table items to the data collection
+	 table.bindItems({
+	    path : "/names",				  
+	    template : new ColumnListItem({
+	       cells: [
+		  new sap.m.Text({text: "{lastName}"}),
+		  new sap.m.Text({text: "{firstName}"})
+	       ]
+	    })
+	 });
+	 // set the model to the Table, so it knows which data to use
+	 table.setModel(model);
+         this.table = table;
+
       }
    });
 });
