@@ -481,6 +481,7 @@ public:
       j["event"] =  m_event->eventId;
       j["eventCnt"] = 1;
       j["run"] = 103;
+      j["lumi"] = gRandom->Integer(200);
       j["date"] = "Nov. 21st 2019";
       j["size"] = 10;
       j["UT_PostStream"] = "UT_refresh_event_info";
