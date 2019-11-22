@@ -495,7 +495,7 @@ void collection_proxies_test(bool proj=true)
    eveMng = REveManager::Create();
    
    gEnv->SetValue("WebGui.HttpPort", 7799);
-   std::string locPath = "/home/alja/root-dev/EveWebApp/ui5";
+   std::string locPath = "ui5";
    eveMng->AddLocation("mydir/", locPath);
    eveMng->SetDefaultHtmlPage("file:mydir/eventDisplay.html");
 
