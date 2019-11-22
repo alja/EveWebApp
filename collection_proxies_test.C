@@ -526,12 +526,5 @@ void collection_proxies_test(bool proj=true)
    eventMng->SetName("EventManager");
    eveMng->GetWorld()->AddElement(eventMng);
 
-   //  eveMng->GetWorld()->AddCommand("QuitRoot", "sap-icon://log", eventMng, "QuitRoot()");
-   // eveMng->GetWorld()->AddCommand("NextEvent", "sap-icon://step", eventMng, "NextEvent()");
-
-   /*
-   auto  m_gui = new FW2GUI();
-   eveMng->GetWorld()->AddElement(m_gui);
-   */
    eveMng->Show();
 }
