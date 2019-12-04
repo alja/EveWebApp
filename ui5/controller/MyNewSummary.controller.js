@@ -57,11 +57,33 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
             this.createTable();
 
          if (!this.popover) {
-            this.popover = new sap.m.Popover();
-            this.popover.addContent(this.table);
+            this.popover = new sap.m.Popover("popupTable", {title:"Popup TEST"});
+/*
+	    var footer = new sap.m.OverflowToolbar();
+	    var b1 = new sap.m.Button({txt:"Select"});
+	    footer.addContent(b1);
+	    //foorter.addContent(new sap.m.Button({txt:"Cancel"}));
+	    this.popover.footer = footer;
+*/	    
+	    
+	    
+	    let sw = new sap.m.SearchField();
+	    sw.placeholder="Filter";
+	    var pt = this.table;
+	    console.log("table filter getBinding ",  pt.getBinding("items") );	    
+	    sw.attachSearch(function(oEvent) {
+	       var txt = oEvent.getParameter("query");	       
+	       let filter = new sap.ui.model.Filter([new sap.ui.model.Filter("firstName", sap.ui.model.FilterOperator.Contains, txt), new sap.ui.model.Filter("lastName", sap.ui.model.FilterOperator.Contains, txt)],false);
+	       pt.getBinding("items").filter(filter, "Applications");
+	    });
+	    
+               this.popover.addContent(sw);
+               this.popover.addContent(this.table);
          }
          this.popover.openBy(this.byId("addCollection"));
       },
+      
+      
       createTable: function() {
 	 // create some dummy JSON data
 	 var data = {
@@ -85,9 +107,10 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 	 var table = new Table("tableTest",{
 	    columns: [
 	       new Column("lastName", {header: new Text({text: "Last Name"})}),
-	       new Column("firstName", {header: new Text({text: "First Name"})})
+	       new Column("firstName", {header: new Text({text:"First Name"})})
 	    ]
 	 });
+         this.table = table;
 	 table.bActiveHeaders = true;
 
 	 table.attachEvent("columnPress", function(evt) {
@@ -136,7 +159,6 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 	 });
 	 // set the model to the Table, so it knows which data to use
 	 table.setModel(model);
-         this.table = table;
 
       }
    });
