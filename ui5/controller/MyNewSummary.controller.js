@@ -56,29 +56,39 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
          if (!this.table)
             this.createTable();
 
-         if (!this.popover) {
+         if (!this.popover) {	    
             this.popover = new sap.m.Popover("popupTable", {title:"Popup TEST"});
-/*
-	    var footer = new sap.m.OverflowToolbar();
-	    var b1 = new sap.m.Button({txt:"Select"});
-	    footer.addContent(b1);
-	    //foorter.addContent(new sap.m.Button({txt:"Cancel"}));
-	    this.popover.footer = footer;
-*/	    
-	    
+
 	    
 	    let sw = new sap.m.SearchField();
 	    sw.placeholder="Filter";
 	    var pt = this.table;
-	    console.log("table filter getBinding ",  pt.getBinding("items") );	    
 	    sw.attachSearch(function(oEvent) {
 	       var txt = oEvent.getParameter("query");	       
 	       let filter = new sap.ui.model.Filter([new sap.ui.model.Filter("firstName", sap.ui.model.FilterOperator.Contains, txt), new sap.ui.model.Filter("lastName", sap.ui.model.FilterOperator.Contains, txt)],false);
 	       pt.getBinding("items").filter(filter, "Applications");
 	    });
 	    
-               this.popover.addContent(sw);
-               this.popover.addContent(this.table);
+            this.popover.addContent(sw);
+            this.popover.addContent(this.table);
+
+	    // footer
+	    var pthis = this;
+	    let fa = new sap.m.OverflowToolbar();
+	    let b1 = new sap.m.Button({text:"AddCollection"});
+	    fa.addContent(b1);
+	    b1.attachPress(function(oEvent) {	       
+               var oSelectedItem = pt.getSelectedItems(); 
+	       var item1 = oSelectedItem[0];
+	       console.log("SELECT ",item1.getBindingContext().getObject());
+	    });
+	    
+	    let b2 = new sap.m.Button({text:"Close"});
+	    fa.addContent(b2);
+	    b2.attachPress(function(oEvent) {
+	       pthis.popover.close();
+	    });
+	    this.popover.setFooter(fa);
          }
          this.popover.openBy(this.byId("addCollection"));
       },
@@ -95,7 +105,6 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 	       {firstName: "Maria", lastName: "Jones"}
 	    ]
 	 };
-
 	 // create a Model with this data
 	 var model = new JSONModel();
 	 model.setData(data);
@@ -105,11 +114,13 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 
 	 // create a sap.m.Table control
 	 var table = new Table("tableTest",{
+	    mode:"SingleSelect",
 	    columns: [
 	       new Column("lastName", {header: new Text({text: "Last Name"})}),
 	       new Column("firstName", {header: new Text({text:"First Name"})})
 	    ]
 	 });
+	 table.setIncludeItemInSelection(true);
          this.table = table;
 	 table.bActiveHeaders = true;
 
