@@ -126,35 +126,23 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 
 	 table.attachEvent("columnPress", function(evt) {
 	    console.log("press paramerer", evt.getParameters());
-	    var par = evt.getParameters();
-            var order = par.column.getOrder();
-	    var sv = -1;
+            var col = evt.getParameters().column;
+	    var sv = false;
 
 	    // init first time ascend
-	    if (order == 0 ) {
-	       par.column.setOrder(1);
+	    if (col.getSortIndicator() == sap.ui.core.SortOrder.Descend || col.getSortIndicator() == sap.ui.core.SortOrder.None ) {
 	       sv = true;
 	    }
-
-	    //ascend
-	    else if (order == 1) {
-	       par.column.setOrder(-1);
-	       sv = false;
+	    else {
+               sv = false;
 	    }
 	    
-	    // desc
-	    else  if (order == -1){
-	       par.column.setOrder(1);
-	       sv = true;
-	    }
-	    var pn =  par.column.sId;
-	    var oSorter = new Sorter(pn, sv);
-	    
+	    var oSorter = new Sorter(col.sId, sv);	    
 	    var oItems = this.getBinding("items");
 	    oItems.sort(oSorter);
 
 	    var indicator = sv ?  sap.ui.core.SortOrder.Descending :  sap.ui.core.SortOrder.Ascending;
-	    par.column.setSortIndicator(indicator);
+	    col.setSortIndicator(indicator);
 	 });
 
 
