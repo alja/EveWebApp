@@ -4,7 +4,7 @@
           xmlns:mvc="sap.ui.core.mvc"
           xmlns:l="sap.ui.layout"
           xmlns:commons="sap.ui.commons">
-   <Page title="EVE-7" showNavButton="false" showFooter="false"
+   <Page title="EVE-7" showNavButton="false" showFooter="false" enableScrolling="false"
          showHeader="true" 
          showSubHeader="false" id="CanvasMainPage">
      <customHeader>
