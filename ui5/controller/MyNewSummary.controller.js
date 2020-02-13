@@ -5,21 +5,22 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
                "sap/m/Column",
                "sap/m/Text",               
 	       "sap/m/ColumnListItem",
-	       "sap/ui/model/Sorter"
-              ], function(SummaryController, EveManager, JSONModel, Table, Column, Text,ColumnListItem, Sorter) {
+	       "sap/ui/model/Sorter",
+   "rootui5/eve7/controller/Ged.controller"
+              ], function(SummaryController, EveManager, JSONModel, Table, Column, Text,ColumnListItem, Sorter, GedController) {
    "use strict";    
 
    return SummaryController.extend("custom.MyNewSummary", {                    
 
       onInit: function() {
          SummaryController.prototype.onInit.apply(this, arguments);
-         this.expandLevel = 1;
+         this.expandLevel = 0;
       },
       event: function(lst) {
          SummaryController.prototype.event( lst);
          oTree.expandToLevel(0);
       },
-      /*
+      
       createSummaryModel: function(tgt, src) {
          if (tgt === undefined) {
             tgt = [];
@@ -36,8 +37,7 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
             var elem = src[n];
 
             var newelem = { fName: elem.fName, id: elem.fElementId, fHighlight: "None", fBackground: "" };
-
-            if (this.canEdit(elem))
+if (GedController.canEditClass(elem._typename)) 
                newelem.fType = "DetailAndActive";
             else
                newelem.fType = "Active";
@@ -51,7 +51,6 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 
          return tgt;
          },
-      */
       addCollection: function (evt){
          if (!this.table)
             this.createTable();
