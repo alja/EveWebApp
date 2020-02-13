@@ -66,17 +66,11 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
       },
 
       nextEvent : function(oEvent) {
-         this.mgr.SendMIR({ "mir":        "NextEvent()",
-                            "fElementId": this.fw2gui.fElementId,
-                            "class":      "EventManager"
-                          });
+	 this.mgr.SendMIR("NextEvent()", this.fw2gui.fElementId, "EventManager");	 
       },
 
       prevEvent : function(oEvent) {
-         this.mgr.SendMIR({ "mir":        "PreviousEvent()",
-                            "fElementId": this.fw2gui.fElementId,
-                            "class":      "EventManager"
-                          });
+	 this.mgr.SendMIR("PreviousEvent()", this.fw2gui.fElementId, "EventManager");
       }
 
    });
