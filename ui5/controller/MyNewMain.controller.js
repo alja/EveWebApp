@@ -1,20 +1,21 @@
 sap.ui.define(['rootui5/eve7/controller/Main.controller',
                'rootui5/eve7/lib/EveManager'
 ], function(MainController, EveManager) {
-   "use strict";    
+   "use strict";
 
-   return MainController.extend("custom.MyNewMain", {                    
+   return MainController.extend("custom.MyNewMain", {
 
       OnWebsocketClosed : function() {
          var elem = this.byId("centerTitle");
          elem.setHtmlText("<strong style=\"color: red;\">Client Disconnected !</strong>");
       },
+
       onInit: function() {
          console.log('MAIN CONTROLLER INIT 2');
          MainController.prototype.onInit.apply(this, arguments);
          this.mgr.handle.SetReceiver(this);
-	 //this.mgr.
-	 console.log("register my controller for init");
+         //this.mgr.
+         console.log("register my controller for init");
          this.mgr.RegisterController(this);
       },
 
@@ -39,6 +40,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
              pthis.showEventInfo();
          }
       },
+
       OnWebsocketMsg : function(handle, msg, offset)
       {
          if ( typeof msg == "string") {
@@ -51,11 +53,11 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          }
          this.mgr.OnWebsocketMsg(handle, msg, offset);
       },
-      
+
       showHelp : function(oEvent) {
          alert("=====User support: dummy@cern.ch");
       },
-      
+
       showEventInfo : function() {
          document.title = "ABC: " + this.fw2gui.fname + " " + this.fw2gui.eventCnt + "/" + this.fw2gui.size;
          this.byId("runInput").setValue(this.fw2gui.run);
@@ -66,11 +68,15 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
       },
 
       nextEvent : function(oEvent) {
-	 this.mgr.SendMIR("NextEvent()", this.fw2gui.fElementId, "EventManager");	 
+          this.mgr.SendMIR("NextEvent()", this.fw2gui.fElementId, "EventManager");
       },
 
       prevEvent : function(oEvent) {
-	 this.mgr.SendMIR("PreviousEvent()", this.fw2gui.fElementId, "EventManager");
+         this.mgr.SendMIR("PreviousEvent()", this.fw2gui.fElementId, "EventManager");
+      },
+
+      toggleGedEditor: function() {
+         this.byId("Summary").getController().toggleEditor();
       }
 
    });
