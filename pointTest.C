@@ -31,9 +31,11 @@ REX::REvePointSet *createPointSet(int npoints = 2, float s = 2, int color = 28)
 void pointTest()
 {
    auto eveMng = REX::REveManager::Create();
-   eveMng->AddLocation("mydir/", "/home/alja/root-dev/EveWebApp/ui5");
-   eveMng->SetDefaultHtmlPage("file:mydir/xxx.html");
- 
+ gEnv->SetValue("WebGui.HttpPort", 7799);
+   std::string locPath = "ui5";
+   eveMng->AddLocation("mydir/", locPath);
+   eveMng->SetDefaultHtmlPage("file:mydir/eventDisplay.html");
+
    REX::REveElement *event = eveMng->GetEventScene();
    auto ps = createPointSet(100);
    event->AddElement(ps);

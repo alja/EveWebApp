@@ -127,7 +127,7 @@ public:
    REveCaloTowerSelector(REveCaloDataHist* cd) : fCaloData(cd){}
    void AddSliceInfo(REveDataCollection* c, int s) { fSliceInfos.emplace_back(c,s); }
    void SetActiveSlice(int a) { fActiveSlice = a; }
-
+   /*
    using REveCaloDataSelector::ProcessSelection;
    void ProcessSelection(REveCaloData::vCellId_t& sel_cells, UInt_t selectionId, Bool_t multi) override
    {
@@ -190,6 +190,7 @@ public:
          }
       }
    }
+   */
 };
 
 class Event
@@ -505,7 +506,7 @@ private:
                    Collection()->GetMainColor(),
                    Collection()->GetMainTransparency());
 
-         ((REveCaloTowerSelector*)fCaloData->GetSelector())->AddSliceInfo(Collection(), fSliceIndex);
+         //         ((REveCaloTowerSelector*)fCaloData->GetSelector())->AddSliceInfo(Collection(), fSliceIndex);
       }
    }
 
