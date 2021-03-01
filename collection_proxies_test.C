@@ -816,12 +816,10 @@ void collection_proxies_test(bool proj=true)
 {
    eveMng = REveManager::Create();
 
- gEnv->SetValue("WebGui.HttpPort", 7799);
-   std::string locPath = "ui5";
-   eveMng->AddLocation("mydir/", locPath);
+   gEnv->SetValue("WebGui.HttpPort", 7799);
+   eveMng->AddLocation("mydir/", "ui5");
    eveMng->SetDefaultHtmlPage("file:mydir/eventDisplay.html");
-
-
+   gEnv->SetValue("WebEve.DisableShow", 1);
 
    
    auto event = new Event();
