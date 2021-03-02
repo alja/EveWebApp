@@ -56,8 +56,7 @@
               </menu>
             </MenuButton>
 
-            <MenuButton text="Help" type="Default"  enabled="true"
-                        styleClass="rightMargin sapUiTinyMarginBottom" visible="true">
+            <MenuButton text="Help" type="Default"  enabled="true" visible="true">
               <menu>
                 <Menu >
                   <items>

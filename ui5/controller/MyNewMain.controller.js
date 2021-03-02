@@ -13,7 +13,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
       onInit: function() {
          console.log('MAIN CONTROLLER INIT 2');
          MainController.prototype.onInit.apply(this, arguments);
-         this.mgr.handle.SetReceiver(this);
+         this.mgr.handle.setReceiver(this);
          //this.mgr.
          console.log("register my controller for init");
          this.mgr.RegisterController(this);
