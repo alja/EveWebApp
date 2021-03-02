@@ -5,7 +5,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
 
    return MainController.extend("custom.MyNewMain", {
 
-      OnWebsocketClosed : function() {
+      onWebsocketClosed : function() {
          var elem = this.byId("centerTitle");
          elem.setHtmlText("<strong style=\"color: red;\">Client Disconnected !</strong>");
       },
@@ -19,8 +19,8 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          this.mgr.RegisterController(this);
       },
 
-      OnEveManagerInit: function() {
-         MainController.prototype.OnEveManagerInit.apply(this, arguments);
+      onEveManagerInit: function() {
+         MainController.prototype.onEveManagerInit.apply(this, arguments);
          var world = this.mgr.childs[0].childs;
 
          // this is a prediction that the fireworks GUI is the last element after scenes
@@ -41,7 +41,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          }
       },
 
-      OnWebsocketMsg : function(handle, msg, offset)
+      onWebsocketMsg : function(handle, msg, offset)
       {
          if ( typeof msg == "string") {
             if ( msg.substr(0,4) == "FW2_") {
@@ -51,7 +51,8 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
                return;
             }
          }
-         this.mgr.OnWebsocketMsg(handle, msg, offset);
+         console.log("socket msg AMT", "OnWebsocketMsg");
+         this.mgr.onWebsocketMsg(handle, msg, offset);
       },
 
       showHelp : function(oEvent) {
