@@ -6,5 +6,9 @@
    eveMng->SetDefaultHtmlPage("file:mydir/eventDisplay.html");
 
 ```
+### Run test
+```
+root.exe collection_proxies_test.C
+```
 ### Screenshot
 ![screenshot](http://xrd-cache-1.t2.ucsd.edu/alja/custom2.png)
