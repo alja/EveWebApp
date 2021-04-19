@@ -32,8 +32,8 @@
              prereq_logdiv: "EveDiv",
              openui5libs: "sap.ui.core" // customize openui5 libs
          }).then(handle => {
-             sap.ui.loader.config({ paths: { custom: "mydir/" } });  // used for offline
-
+             let x = JSROOT.source_dir.split("/");
+             sap.ui.loader.config({ paths: { custom: "mydir-" + x[4] + "/" } });
              sap.ui.require(["sap/ui/core/ComponentContainer"], ComponentContainer => {
 		 new ComponentContainer({
                      name: "custom",
