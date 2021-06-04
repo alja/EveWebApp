@@ -1,6 +1,7 @@
 sap.ui.define(['rootui5/eve7/controller/Main.controller',
-               'rootui5/eve7/lib/EveManager'
-], function(MainController, EveManager) {
+               'rootui5/eve7/lib/EveManager',
+               'rootui5/browser/controller/FileDialog.controller'
+], function(MainController, EveManager, FileDialogController) {
    "use strict";
 
    return MainController.extend("custom.MyNewMain", {
@@ -19,6 +20,30 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          this.mgr.RegisterController(this);
       },
 
+
+      /** @brief Invoke dialog with server side code */
+      onSaveAsFile: function(tab) {
+         this.amtfn = "";
+         console.log("on save as ");
+                  FileDialogController.SaveAs({
+                     websocket: this.mgr.handle,
+                     filename: "testdialog",
+                     title: "Select file name to save",
+                     filter: "Any files",
+                     filters: ["Text files (*.txt)", "C++ files (*.cxx *.cpp *.c)", "Any files (*)"],
+                     onOk: fname => {
+                        console.log("AMT test dialof ALL OK, chose ", fname);
+                        let p = Math.max(fname.lastIndexOf("/"), fname.lastIndexOf("\\"));
+                        let title = (p > 0) ? fname.substr(p+1) : fname;
+                        this.amtfn = fname;
+                        let cmd = "FileDialogSaveAs(\"" + fname + "\")";
+                        this.mgr.SendMIR(cmd, this.fw2gui.fElementId, "EventManager");
+                     },
+                     onCancel: function() { },
+                     onFailure: function() { console.log("DIALOF fail");}
+                  });
+               },
+         
       onEveManagerInit: function() {
          MainController.prototype.onEveManagerInit.apply(this, arguments);
          var world = this.mgr.childs[0].childs;

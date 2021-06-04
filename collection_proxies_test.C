@@ -805,6 +805,11 @@ public:
       fCMng->LoadEvent();
       eveMng->EnableRedraw();
    }
+
+   void FileDialogSaveAs(const char *arg)
+   {
+      printf("Callback from client FileDialogSaveA as .... path = %s\n", arg);
+   }
 };
 
 

@@ -95,10 +95,12 @@
             <Input id="eventInput" width="200px" enabled="false"/>
             <ToolbarSpacer />
             <Label id="dateLabel" />
-              <!--
+             
+           <Button text="SaveAs"
+                   press="onSaveAsFile" />
             <Button icon="sap-icon://user-edit" type="Transparent"
                tooltip="Toggle GED editor" press="toggleGedEditor" enabled="false" />
-            <MenuButton text="File"  enabled="false">
+            <!-- <MenuButton text="File"  enabled="false">
                <menu>
                   <Menu itemSelected="onFileMenuAction">
                      <items>
