@@ -111,24 +111,26 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          if (!this.filterDialog)
             this.makeFilterDialog();
 
+            let aData = [
+               { id: Math.random(), name: "$Muons.@size > 4", checked: true, rating: "5", type: "Inactive" },
+               { id: Math.random(), name: "$Tracks.pt() > 1", checked: true, rating: "2", type: "Inactive" },
+               { id: Math.random(), name: "", checked: false, rating: "0", type: "Inactive" },
+            ];
+   
+   
+            let hltArr = [
+               { id: Math.random(), trigger: "HTL", name: "HLT_mu9", checked: true, rating: "5", type: "Inactive" },
+   
+            ];
+
+            var oModel = new sap.ui.model.json.JSONModel();
+            oModel.setData({ modelData: aData, hltData: hltArr });
+this.filterDialog.setModel(oModel);
          this.filterDialog.open();
       },
 
       makeFilterDialog: function () {
-         let aData = [
-            { id: Math.random(), name: "$Muons.@size > 4", checked: true, rating: "5", type: "Inactive" },
-            { id: Math.random(), name: "$Tracks.pt() > 1", checked: true, rating: "2", type: "Inactive" },
-            { id: Math.random(), name: "", checked: false, rating: "0", type: "Inactive" },
-         ];
 
-
-         let hltArr = [
-            { id: Math.random(), trigger: "HTL", name: "HLT_mu9", checked: true, rating: "5", type: "Inactive" },
-
-         ];
-
-         var oModel = new sap.ui.model.json.JSONModel();
-         oModel.setData({ modelData: aData, hltData: hltArr });
 
          var aColumns = [
             new sap.m.Column({
@@ -190,14 +192,14 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
             }
          });
 
-         oTable.setModel(oModel);
+       //  oTable.setModel(oModel);
          oTable.bindItems({
             path: "/modelData",
             template: oTemplate,
             key: "id"
          });
 
-
+/*
          var oAddButton = new sap.m.Button({
             icon: "sap-icon://sys-add",
             press: function (oEvent) {
@@ -207,7 +209,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
                aData.push(nv);
                oModel.setProperty("/modelData", aData);
             }
-         });
+         });*/
          /// ---------------------------------------------------------------------------------------
 
          var aHLTColumns = [
@@ -277,11 +279,11 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          let oHLTTable = new sap.m.Table({
             growing: true,
             growingScrollToLoad: true,
+            mode:sap.m.ListMode.Delete,
             columns: aHLTColumns,
          });
 
-         oHLTTable.setModel(oModel);
-         oHLTTable.setMode(sap.m.ListMode.Delete);
+        // oHLTTable.setModel(oModel);
          oHLTTable.bindItems({
             path: "/hltData",
             mode: sap.m.ListMode.None,
@@ -289,6 +291,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
             key: "id"
          });
 
+         /*
          var oHLTAddButton = new sap.m.Button({
             icon: "sap-icon://sys-add",
             press: function (oEvent) {
@@ -298,7 +301,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
                aData.push(nv);
                oModel.setProperty("/hltData", aData);
             }
-         });
+         });*/
 
          //--------------------------------------------------------
          let p1 = new sap.m.Panel( {
