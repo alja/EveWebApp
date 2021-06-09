@@ -88,11 +88,12 @@
 
             <ToolbarSpacer />
             <Label id="runLabel" text="Run" />
-            <Input id="runInput" width="200px" enabled="false" />
+            <Input id="runInput" width="100px"  />
             <Label id="lumiLabel" text="Lumi" />
-            <Input id="lumiInput" width="200px" enabled="false"/>
+            <Input id="lumiInput" width="100px" />
             <Label id="event" text="Event"/>
-            <Input id="eventInput" width="200px" enabled="false"/>
+            <Input id="eventInput" width="100px" />
+           <Button id="eventFilters" text="EventFilters" press="showFilters"/>
             <ToolbarSpacer />
             <Label id="dateLabel" />
              

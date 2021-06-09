@@ -103,7 +103,254 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
 
       toggleGedEditor: function() {
          this.byId("Summary").getController().toggleEditor();
-      }
+      },
+      
 
+
+	   showFilters: function () {
+		   console.log("show filter");
+
+
+
+      let aData  = [
+         {id: Math.random(),  name: "$Muons.@size > 4", checked: true, rating: "5", type: "Inactive"},
+         {id: Math.random(),  name: "$Tracks.pt() > 1", checked: true, rating: "2", type: "Inactive"},
+         {id: Math.random(),  name: "", checked: false, rating: "0", type: "Inactive"},
+         ];
+      
+   
+      let hltArr = [
+         {id: Math.random(),  trigger: "HTL", name : "HLT_mu9",  checked: true, rating: "5", type: "Inactive"},
+   
+      ];
+   
+      var oApp = new sap.m.App;
+   
+      jQuery.sap.require("sap.m.MessageBox");
+      jQuery.sap.require("sap.m.MessageToast");
+   
+      var oModel = new sap.ui.model.json.JSONModel();
+      oModel.setData({modelData: aData, hltData : hltArr});
+      //oModel.attachPropertyChange(function() { window.alert("ddddddd") });
+      
+      
+      var oTableInfo = new sap.m.Toolbar({
+         active : true,
+         content : [
+            new sap.m.Text({
+               text : "Thest event filter for collections.",
+               wrapping : false
+            })
+         ]
+      });
+      var aColumns = [
+         new sap.m.Column({
+            header : new sap.m.Label({
+               text : "Expression"
+            })
+         }),
+         new sap.m.Column({
+            hAlign: "Center",
+            header : new sap.m.Label({
+               text : "Active"
+            })
+         }),
+         new sap.m.Column({
+            header : new sap.m.Label({
+               text : "Pass"
+            })
+         })
+      ];
+   
+      var oTemplate = new sap.m.ColumnListItem({
+         vAlign: "Middle",
+         type : "{type}",
+         detailPress: function() {
+            setTimeout(function() {
+               sap.m.MessageToast.show("detail is pressed");
+            }, 10);
+         },
+         cells : [
+            new sap.m.Input({
+               value : "{name}",
+               wrapping : false
+            }),
+            new sap.m.CheckBox({
+               selected: "{checked}"
+            }),
+            new sap.m.Label({
+               text: "{rating}"
+            })
+         ]
+      });
+   
+      var oTable = new sap.m.Table({
+         growing: true,
+         growingThreshold: 7,
+         growingScrollToLoad : true,
+         columns : aColumns,
+         "delete" : function(oEvent) {
+            var oItem = oEvent.getParameter("listItem");
+   
+            sap.m.MessageBox.confirm("Are you sure to delete this record?", {
+               onClose: function(sResult){
+                  if (sResult == sap.m.MessageBox.Action.CANCEL) {
+                     return;
+                  }
+   
+                  oTable.removeItem(oItem);
+                  setTimeout(function() {
+                     oTable.focus();
+                  }, 0);
+               }
+            });
+         }
+      });
+   
+      oTable.setModel(oModel);
+      oTable.setMode(sap.m.ListMode.Delete);
+      oTable.bindItems({
+         path: "/modelData",
+         template : oTemplate,
+         key: "id"
+      });
+   
+   
+      var oAddButton = new sap.m.Button({
+            icon :"sap-icon://sys-add",
+         press: function (oEvent) {
+            let nv = { id: Math.random(), name: "", checked: true,  rating: 0, type: "Inactive" }
+            let data = oModel.getData();
+            console.log("data ORIG", data);
+            var aData = oModel.getProperty("/modelData");
+            aData.push(nv);
+            oModel.setProperty("/modelData", aData);
+            console.log("new data ", aData);
+         }
+      });
+      /// ---------------------------------------------------------------------------------------
+      
+   
+      var aHLTColumns = [
+         new sap.m.Column({
+            width: "160px",
+            header : new sap.m.Label({
+               text : "Process"
+            })
+         }),
+         new sap.m.Column({
+            header : new sap.m.Label({
+               text : "Expression"
+            })
+         }),
+         new sap.m.Column({
+            header : new sap.m.Label({
+               text : "Active"
+            })
+         }),
+         new sap.m.Column({
+            width: "100px",
+            header : new sap.m.Label({
+               text : "Pass"
+            })
+         }),
+      ];
+   
+   
+      var oHLTTemplate = new sap.m.ColumnListItem({
+         type : "{type}",
+         detailPress: function() {
+            setTimeout(function() {
+               sap.m.MessageToast.show("detail is pressed");
+            }, 10);
+         },
+         cells: [
+            new sap.m.ComboBox({
+               width : "150px",
+               items: [
+                  {
+                     "key": "RECO",
+                     "text": "RECO"
+                  },
+                  {
+                     "key": "SIM",
+                     "text": "SIM"
+                  },
+                  {
+                     "key": "HLT",
+                     "text": "HLT"
+                  }],
+               selectedKey: "HLT"
+            }),
+            new sap.m.Input({
+               value : "{name}",
+               wrapping : false
+            }),
+            new sap.m.CheckBox({
+               selected: "{checked}"
+            }),
+            new sap.m.Label({
+               text: "{rating}"
+            })
+         ]
+      });
+
+         let oHLTTable = new sap.m.Table({
+            growing: true,
+            growingScrollToLoad: true,
+            columns: aHLTColumns,
+         });
+
+         oHLTTable.setModel(oModel);
+         oHLTTable.setMode(sap.m.ListMode.Delete);
+         oHLTTable.bindItems({
+            path: "/hltData",
+            mode: sap.m.ListMode.None,
+            template: oHLTTemplate,
+            key: "id"
+         });
+
+         var oHLTAddButton = new sap.m.Button({
+            //text: "Add",
+            icon :"sap-icon://sys-add",
+            press: function (oEvent) {
+               let nv = { process: "HLT", name: "", checked: true,  rating: 0, type: "Inactive" }
+               let data = oModel.getData();
+               var aData = oModel.getProperty("/hltData");
+               aData.push(nv);
+               oModel.setProperty("/hltData", aData);
+            }
+         });
+
+         //--------------------------------------------------------
+         let p1 = new sap.m.Panel("panel6", {
+            headerText: "Event Filters",
+            content: [
+               oTable, oAddButton
+            ]
+         });
+
+         let p2 = new sap.m.Panel("panel6e", {
+            headerText: "HLT Filters",
+            content: [
+               oHLTTable, oHLTAddButton
+            ]
+         });
+         let xx = new sap.m.Dialog("filterTable", { 
+            beginButton : new sap.m.Button('simpleDialogAcceptButton', { text: "Apply"}),
+            endButton : new sap.m.Button('simpleDialogCancelButton', { text: "Cancel"})
+         }
+            );
+         xx.addStyleClass("sapUiSizeCompact");
+         oTable.addStyleClass("sapUiSizeCompact");
+         xx.open();
+
+
+         xx.addContent(p1);
+         xx.addContent(p2);
+
+
+
+      }
    });
 });
