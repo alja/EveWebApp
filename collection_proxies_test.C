@@ -810,6 +810,12 @@ public:
    {
       printf("Callback from client FileDialogSaveA as .... path = %s\n", arg);
    }
+
+
+   void FilterPublished(const char *arg)
+   {
+      printf("JSON Settings %s \n", arg);
+   }
 };
 
 

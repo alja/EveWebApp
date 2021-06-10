@@ -130,7 +130,11 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
       },
 
       publishFilters: function () {
-         console.log("FILTER PUBLISHED ", this.filterDialog.getModel());
+         let fd = this.filterDialog.getModel().getData();
+         console.log("FILTER PUBLISHED ", fd);
+         let cont = JSON.stringify(fd);
+         console.log("publish flat ", cont);
+         this.mgr.SendMIR("FilterPublished(" + cont +"\)", this.fw2gui.fElementId, "EventManager");
       },
 
       makeFilterDialog: function () {
