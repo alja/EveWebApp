@@ -111,27 +111,29 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          if (!this.filterDialog)
             this.makeFilterDialog();
 
-            let aData = [
-               { id: Math.random(), name: "$Muons.@size > 4", checked: true, rating: "5", type: "Inactive" },
-               { id: Math.random(), name: "$Tracks.pt() > 1", checked: true, rating: "2", type: "Inactive" },
-               { id: Math.random(), name: "", checked: false, rating: "0", type: "Inactive" },
-            ];
-   
-   
-            let hltArr = [
-               { id: Math.random(), trigger: "HTL", name: "HLT_mu9", checked: true, rating: "5", type: "Inactive" },
-   
-            ];
+         let aData = [
+            { id: Math.random(), name: "$Muons.@size > 4", checked: true, rating: "5", type: "Inactive" },
+            { id: Math.random(), name: "$Tracks.pt() > 1", checked: true, rating: "2", type: "Inactive" },
+            { id: Math.random(), name: "", checked: false, rating: "0", type: "Inactive" },
+         ];
 
-            var oModel = new sap.ui.model.json.JSONModel();
-            oModel.setData({ modelData: aData, hltData: hltArr });
-this.filterDialog.setModel(oModel);
+
+         let hltArr = [
+            { id: Math.random(), trigger: "HTL", name: "HLT_mu9", checked: true, rating: "5", type: "Inactive" },
+
+         ];
+
+         var oModel = new sap.ui.model.json.JSONModel();
+         oModel.setData({ modelData: aData, hltData: hltArr });
+         this.filterDialog.setModel(oModel);
          this.filterDialog.open();
       },
 
+      publishFilters: function () {
+         console.log("FILTER PUBLISHED ", this.filterDialog.getModel());
+      },
+
       makeFilterDialog: function () {
-
-
          var aColumns = [
             new sap.m.Column({
                header: new sap.m.Label({
@@ -199,7 +201,7 @@ this.filterDialog.setModel(oModel);
             key: "id"
          });
 
-/*
+
          var oAddButton = new sap.m.Button({
             icon: "sap-icon://sys-add",
             press: function (oEvent) {
@@ -209,7 +211,7 @@ this.filterDialog.setModel(oModel);
                aData.push(nv);
                oModel.setProperty("/modelData", aData);
             }
-         });*/
+         });
          /// ---------------------------------------------------------------------------------------
 
          var aHLTColumns = [
@@ -291,7 +293,7 @@ this.filterDialog.setModel(oModel);
             key: "id"
          });
 
-         /*
+         
          var oHLTAddButton = new sap.m.Button({
             icon: "sap-icon://sys-add",
             press: function (oEvent) {
@@ -301,10 +303,14 @@ this.filterDialog.setModel(oModel);
                aData.push(nv);
                oModel.setProperty("/hltData", aData);
             }
-         });*/
+         });
 
          //--------------------------------------------------------
          let p1 = new sap.m.Panel( {
+
+			headerText : "This is the Panel header",
+            title: "blal",
+            showTitle : true,
             headerText: "Event Filters",
             content: [
                oTable, oAddButton
@@ -320,7 +326,8 @@ this.filterDialog.setModel(oModel);
 
          let pthis = this;
          this.filterDialog = new sap.m.Dialog("filterTable", {
-            beginButton: new sap.m.Button('simpleDialogAcceptButton', { text: "Apply" }),
+            title: "Event Filter Dialog",
+            beginButton: new sap.m.Button('simpleDialogAcceptButton', { text: "Apply", press:function() {pthis.publishFilters();} }),
             endButton: new sap.m.Button('simpleDialogCancelButton', { text: "Cancel", press: function () { pthis.filterDialog.close(); } }),
             content: [p1, p2]
          }
