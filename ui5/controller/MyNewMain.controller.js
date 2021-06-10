@@ -134,7 +134,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          console.log("FILTER PUBLISHED ", fd);
          let cont = JSON.stringify(fd);
          console.log("publish flat ", cont);
-         this.mgr.SendMIR("FilterPublished(" + cont +"\)", this.fw2gui.fElementId, "EventManager");
+         this.mgr.SendMIR("FilterPublished(\"" + cont +"\"\)", this.fw2gui.fElementId, "EventManager");
       },
 
       makeFilterDialog: function () {
