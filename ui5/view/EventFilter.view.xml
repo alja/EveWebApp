@@ -1,0 +1,30 @@
+<mvc:View
+    controllerName="custom.controller.EventFilter"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m"
+    class="sapUiSizeCompact"
+    >
+
+   <Dialog class="sapUiSizeCompact" id="filterDialog"
+      title="Event Filter Dialog">
+    <Panel id="plainPanel" >
+        <headerToolbar>
+            <OverflowToolbar>
+               <Title text="HELLO"/>
+               <Button text="LEGO" />
+            </OverflowToolbar>
+        </headerToolbar>
+    </Panel>
+    <Panel id="htmlPanel" >
+        <headerToolbar>
+            <OverflowToolbar>
+               <Title text="HELLO"/>
+               <Button text="LEGO" />
+            </OverflowToolbar>
+        </headerToolbar>
+    </Panel>
+   </Dialog>
+</mvc:View>
