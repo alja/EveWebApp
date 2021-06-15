@@ -28,6 +28,8 @@
 #include <ROOT/REveCalo.hxx>
 
 #include "TGeoTube.h"
+#include "TEnv.h"
+#include "TBase64.h"
 #include "TROOT.h"
 #include "TList.h"
 #include "TParticle.h"
@@ -36,6 +38,8 @@
 #include "TFile.h"
 #include "TH2F.h"
 #include <iostream>
+
+//#include "json.hpp"
 
 
 const Double_t kR_min = 300;
@@ -814,7 +818,13 @@ public:
 
    void FilterPublished(const char *arg)
    {
-      printf("JSON Settings %s \n", arg);
+      printf("FilterPublished >>>> %s <<<<<\n", arg);
+
+      TString test = TBase64::Decode(arg);
+      printf("DATA %s \n", test.Data());
+
+      //nlohmann::json cj = nlohmann::json::parse(xx);
+      // cj.dump(3);
    }
 };
 
