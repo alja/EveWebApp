@@ -23,27 +23,25 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
 
 
       /** @brief Invoke dialog with server side code */
-      onSaveAsFile: function(tab) {
-         this.amtfn = "";
-         console.log("on save as ");
-                  FileDialogController.SaveAs({
-                     websocket: this.mgr.handle,
-                     filename: "testdialog",
-                     title: "Select file name to save",
-                     filter: "Any files",
-                     filters: ["Text files (*.txt)", "C++ files (*.cxx *.cpp *.c)", "Any files (*)"],
-                     onOk: fname => {
-                        console.log("AMT test dialof ALL OK, chose ", fname);
-                        let p = Math.max(fname.lastIndexOf("/"), fname.lastIndexOf("\\"));
-                        let title = (p > 0) ? fname.substr(p+1) : fname;
-                        this.amtfn = fname;
-                        let cmd = "FileDialogSaveAs(\"" + fname + "\")";
-                        this.mgr.SendMIR(cmd, this.fw2gui.fElementId, "EventManager");
-                     },
-                     onCancel: function() { },
-                     onFailure: function() { console.log("DIALOF fail");}
-                  });
-               },
+      onSaveAsFile: function (tab) {
+         FileDialogController.SaveAs({
+            websocket: this.mgr.handle,
+            filename: "testdialog",
+            title: "Select FWC",
+            filter: "Any files",
+            can_change_path: false,
+            filters: ["Text files (*.txt)", "C++ files (*.cxx *.cpp *.c)", "Any files (*)"],
+            onOk: fname => {
+               let p = Math.max(fname.lastIndexOf("/"), fname.lastIndexOf("\\"));
+               let title = (p > 0) ? fname.substr(p + 1) : fname;
+               this.amtfn = fname;
+               let cmd = "FileDialogSaveAs(\"" + fname + "\")";
+               this.mgr.SendMIR(cmd, this.fw2gui.fElementId, "EventManager");
+            },
+            onCancel: function () { },
+            onFailure: function () { console.log("DIALOG fail"); }
+         });
+      },
          
       onEveManagerInit: function() {
          MainController.prototype.onEveManagerInit.apply(this, arguments);

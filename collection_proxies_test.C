@@ -26,6 +26,7 @@
 #include <ROOT/REveBoxSet.hxx>
 #include <ROOT/REveSelection.hxx>
 #include <ROOT/REveCalo.hxx>
+#include <ROOT/RFileDialog.hxx>
 
 #include "TGeoTube.h"
 #include "TEnv.h"
@@ -912,6 +913,9 @@ void collection_proxies_test(bool proj=true)
    eveMng->GetWorld()->AddElement(eventMng);
 
    eveMng->GetWorld()->AddCommand("NextEvent", "sap-icon://step", eventMng, "NextEvent()");
+
+   auto dialog = std::make_shared<RFileDialog>(RFileDialog::kSaveAs, "Select FWC");
+   dialog->SetWorkingPath("/tmp/");
 
    eveMng->Show();
 }
