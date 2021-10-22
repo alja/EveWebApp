@@ -29,6 +29,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
             filename: "testdialog",
             title: "Select FWC",
             filter: "Any files",
+            working_path: "/home/alja/",
             can_change_path: false,
             filters: ["Text files (*.txt)", "C++ files (*.cxx *.cpp *.c)", "Any files (*)"],
             onOk: fname => {
