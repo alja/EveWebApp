@@ -35,13 +35,19 @@
                   </Menu>
                </menu>
             </MenuButton>
-            <Button text="Edit" type="Transparent" enabled="false"
-                    ></Button>
-
+<!---COMMON PREFRENCVES -->
+            <MenuButton id="fwedit" text="Edit" type="Transparent">
+            <menu>
+               <Menu   itemSelected="showPreferences">
+                        <MenuItem text="Common Prefrences" />
+               </Menu>
+            </menu>
+            </MenuButton>
+<!---View  -->
             <MenuButton text="View" type="Transparent"  enabled="true"
                         visible="true">
               <menu>
-                <Menu itemSelected="onViewMenuActionxxx" id="menuViewId">
+                <Menu  itemSelected="onViewMenuActionxxx" id="menuViewId">
                   <items>
                     <MenuItem text="New Viewer" >
                       <items>

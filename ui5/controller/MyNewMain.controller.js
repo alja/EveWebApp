@@ -29,7 +29,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
             filename: "testdialog",
             title: "Select FWC",
             filter: "Any files",
-            working_path: "/home/alja/",
+            working_path: "/Files system/tmp/",
             can_change_path: false,
             filters: ["Text files (*.txt)", "C++ files (*.cxx *.cpp *.c)", "Any files (*)"],
             onOk: fname => {
@@ -119,6 +119,24 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
               // console.log(oView, "filter dialog", oView.byId("filterDialog"));
                pthis.eventFilter.makeTables();
                pthis.eventFilter.openFilterDialog();
+            });
+         }
+      },
+
+      showPreferences: function () {
+         if (this.cpref){
+            this.cpref.openPrefDialog(this.byId("fwedit"));
+         }
+         else {
+            let pthis = this;
+            XMLView.create({
+               viewName: "custom.view.CommonPreferences",
+            }).then(function (oView) {
+               pthis.cpref = oView.getController();
+               //pthis.eventFilter.setGUIElement(pthis.fw2gui);
+               pthis.cpref.openPrefDialog(pthis.byId("fwedit"));
+
+               
             });
          }
       }
