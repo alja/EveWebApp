@@ -22,15 +22,32 @@ sap.ui.define([
                 { plotEt: true, mode: "auto", maxH: 5, valToH: 100 }
             );
 
+            this.mgr = this.getView().getViewData().mgr;
 
             this.getView().setModel(model);
-            let pthis = this;
+            var pthis = this;
             model.attachPropertyChange(function (oEvent) {
                 console.log("Scale changed event ", oEvent);
+
+                this.getView().setModel(model);
+                let fd = pthis.getView().getModel().getData();
+                let cont = JSON.stringify(fd);
+                //let xxx = btoa(cont);
+                let xxx = "test";
+                let cmd = "ScaleChanged(\"" + xxx + "\")";
+                console.log("BLABLA [cmd = ]", cmd)
+                pthis.mgr.SendMIR(cmd, pthis.fw2gui.fElementId, "EventManager");
+
             }, this);
+
 
         },
 
+
+        setGUIElement: function(gui) {
+            console.log("Event Filter FW2GUI ", gui);
+            this.fw2gui = gui;
+        },
         openPrefDialog: function (wId) {
             //this.byId("prefDialog").open();
             this.byId("prefDialog").openBy(wId);

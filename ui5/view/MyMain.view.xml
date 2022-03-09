@@ -72,6 +72,10 @@
                 </Menu>
               </menu>
             </MenuButton>
+
+          <Button id="invMassBtn" text="InvMassDialog" type="Transparent"
+               tooltip="Toggle GED editor" press="onPressInvMass"/>
+
          </contentLeft>
          <contentMiddle>
                 <FormattedText id="centerTitle" htmlText="ABC Event Display"/>

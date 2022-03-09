@@ -37,6 +37,7 @@ sap.ui.define([
          ];
 
          var oModel = new sap.ui.model.json.JSONModel();
+         
          oModel.setData({ modelData: aData, hltData: hltArr });
          this.byId("filterDialog").setModel(oModel);
 

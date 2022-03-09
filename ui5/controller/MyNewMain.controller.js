@@ -1,8 +1,9 @@
 sap.ui.define(['rootui5/eve7/controller/Main.controller',
                'rootui5/eve7/lib/EveManager',
                'rootui5/browser/controller/FileDialog.controller',
-               "sap/ui/core/mvc/XMLView"
-], function(MainController, EveManager, FileDialogController, XMLView) {
+               "sap/ui/core/mvc/XMLView",
+               'sap/ui/core/Fragment'
+], function(MainController, EveManager, FileDialogController, XMLView, Fragment) {
    "use strict";
 
    return MainController.extend("custom.MyNewMain", {
@@ -19,6 +20,11 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          //this.mgr.
          console.log("register my controller for init");
          this.mgr.RegisterController(this);
+
+
+         let sth =  $("#nextEvent");
+         console.log("st jquery ", $("#nextEvent").position());
+         console.log("st jquery ", sth.offset());
       },
 
 
@@ -123,6 +129,60 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          }
       },
 
+      onPressInvMass: function(oEvent)
+      {
+
+			var oButton = oEvent.getSource(),
+				oView = this.getView();
+
+			// create popover
+			if (!this._pPopover) {
+				this._pPopover = Fragment.load({
+					id: oView.getId(),
+					name: "custom.view.Popover",
+					controller: this
+            }).then(function (oPopover) {
+               oView.addDependent(oPopover);
+
+
+               var list = new sap.m.List({
+                  inset: true
+               });
+
+               var data = {
+                  navigation: [{ title: "ffffff" }, { title: "fffffffff" }]
+               };
+
+
+               var itemTemplate = new sap.m.StandardListItem({
+                  title: "{title}"
+               });
+
+               var oModel = new sap.ui.model.json.JSONModel();
+               // set the data for the model
+               oModel.setData(data);
+               // set the model to the list
+               list.setModel(oModel);
+
+               // bind Aggregation
+               list.bindAggregation("items", "/navigation", itemTemplate);
+
+               oPopover.addContent(list);
+					// oPopover.bindElement("/ProductCollection/0");
+					return oPopover;
+				});
+			}
+			this._pPopover.then(function(oPopover) {
+				oPopover.openBy(oButton);
+			});
+      },
+      handleInvMassCalcPress : function()
+      {
+			this.byId("myPopover").close();
+			alert("Calculate mir has been sent");
+
+      },
+   
       showPreferences: function () {
          if (this.cpref){
             this.cpref.openPrefDialog(this.byId("fwedit"));
@@ -130,10 +190,11 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          else {
             let pthis = this;
             XMLView.create({
-               viewName: "custom.view.CommonPreferences",
+               viewData: { "mgr": this.mgr},
+               viewName: "custom.view.CommonPreferences"
             }).then(function (oView) {
                pthis.cpref = oView.getController();
-               //pthis.eventFilter.setGUIElement(pthis.fw2gui);
+               pthis.cpref.setGUIElement(pthis.fw2gui);
                pthis.cpref.openPrefDialog(pthis.byId("fwedit"));
 
                
