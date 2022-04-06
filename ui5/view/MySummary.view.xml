@@ -12,10 +12,6 @@
              press="addCollection" width="100%" >
         <layoutData><l:SplitterLayoutData size="30px" resizable="false"/></layoutData>
      </Button>
-     <Button id="addAss" text="Add associations"
-             press="addCollection" width="100%" >
-        <layoutData><l:SplitterLayoutData size="30px" resizable="false"/></layoutData>
-     </Button>
     <Tree id="tree" itemPress="onItemPressed"  toggleOpenState="onToggleOpenState" width="95%"
 	  class="sapUiSizeCompact sapUiTinyMargin" >
       <layoutData><l:SplitterLayoutData size="auto" minSize="90%"/></layoutData>

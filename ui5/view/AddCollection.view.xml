@@ -1,0 +1,29 @@
+<mvc:View controllerName="custom.controller.AddCollection" 
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns="sap.m">
+<Dialog id="acdialog" contentHeight="100%" contentWidth="50%" title="AddCollection">
+    <TabContainer id="tt" class="sapUiResponsiveContentPadding ">
+        <items>
+            <TabContainerItem id="ctab" name="EDM Collection">
+                <content>
+                    <SearchField id="csr" class="sapUiSizeCompact" placeholder="Filter" search=".onFilterPost"/>
+                </content>
+            </TabContainerItem>
+            <TabContainerItem id="atab" name="Association">
+                <content>
+                    <SearchField id="asr" class="sapUiSizeCompact" placeholder="Filter" search=".onFilterPost"/>
+                </content>
+            </TabContainerItem>
+        </items>
+    </TabContainer>
+    <!--footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Button text="AddCollection" />
+                <Button text="Close" />
+
+            </OverflowToolbar>
+        </footer-->
+
+</Dialog>
+</mvc:View>
