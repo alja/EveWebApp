@@ -80,6 +80,24 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 
 
 	   addCollection: function (evt) {
+
+		let mdata = {
+			names: [
+				{ firstName: "Peter", lastName: "Mueller" },
+				{ firstName: "Petra", lastName: "Maier" },
+				{ firstName: "Thomas", lastName: "Smith" },
+				{ firstName: "John", lastName: "Williams" },
+				{ firstName: "Maria", lastName: "Jones" }
+			],
+			friends: [
+				{ firstName: "Feter", lastName: "Mueller" },
+				{ firstName: "Fetra", lastName: "Maier" },
+				{ firstName: "Tsssshomas", lastName: "Smith" },
+				{ firstName: "Jack", lastName: "Williams" },
+				{ firstName: "Yumi", lastName: "Jones" }
+			]
+		};
+
 		   if (this.acGUI) {
 			   this.acGUI.open();
 		   }
@@ -87,6 +105,7 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 			   let pthis = this;
 			   XMLView.create({
 				   viewName: "custom.view.AddCollection",
+				   viewData: mdata
 			   }).then(function (oView) {
 				   pthis.acGUI = oView.getController().dialog;
 				   pthis.acGUI.open();

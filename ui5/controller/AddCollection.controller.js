@@ -13,25 +13,9 @@ sap.ui.define([
     var AddCollectionController = Controller.extend("custom.controller.AddCollection", {
 
         onInit: function () {
-            let data = {
-                names: [
-                    { firstName: "Peter", lastName: "Mueller" },
-                    { firstName: "Petra", lastName: "Maier" },
-                    { firstName: "Thomas", lastName: "Smith" },
-                    { firstName: "John", lastName: "Williams" },
-                    { firstName: "Maria", lastName: "Jones" }
-                ],
-                friends: [
-                    { firstName: "Feter", lastName: "Mueller" },
-                    { firstName: "Fetra", lastName: "Maier" },
-                    { firstName: "Tsssshomas", lastName: "Smith" },
-                    { firstName: "Jack", lastName: "Williams" },
-                    { firstName: "Yumi", lastName: "Jones" }
-                ]
-            };
             let oModel = new sap.ui.model.json.JSONModel();
             // set the data for the model
-            oModel.setData(data);
+            oModel.setData(this.getView().getViewData());
             this.getView().setModel(oModel);
 
             let cTable = this.makeTable("/names");
@@ -79,8 +63,6 @@ sap.ui.define([
 
             oTable.setIncludeItemInSelection(true);
             oTable.bActiveHeaders = true;
-            // oTable.setModel(oModel);
-
 
             oTable.attachEvent("columnPress", function (evt) {
                 var col = evt.getParameters().column;
