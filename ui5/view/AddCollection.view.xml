@@ -7,11 +7,49 @@
             <TabContainerItem id="ctab" name="EDM Collection">
                 <content>
                     <SearchField id="csr" class="sapUiSizeCompact" placeholder="Filter" search=".onFilterPost"/>
+
+                    <Table id="ctable" mode="SingleSelect">
+                        <columns>
+                            <Column >
+                                <Text text="Product" />
+                            </Column>
+                            <Column >
+                                <Text text="Supplier" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{firstName}" />
+                                    <Text text="{lastName}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+
                 </content>
             </TabContainerItem>
             <TabContainerItem id="atab" name="Association">
                 <content>
                     <SearchField id="asr" class="sapUiSizeCompact" placeholder="Filter" search=".onFilterPost"/>
+                    <Table id="atable" mode="SingleSelect">
+                        <columns>
+                            <Column >
+                                <Text text="Product" />
+                            </Column>
+                            <Column >
+                                <Text text="Supplier" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{firstName}" />
+                                    <Text text="{lastName}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
                 </content>
             </TabContainerItem>
         </items>

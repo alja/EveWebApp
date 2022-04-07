@@ -18,11 +18,11 @@ sap.ui.define([
             oModel.setData(this.getView().getViewData());
             this.getView().setModel(oModel);
 
-            let cTable = this.makeTable("/names");
-            this.getView().byId("ctab").addContent(cTable);
+            let cTable = this.makeTable("ctable", "/names");
+           // this.getView().byId("ctab").addContent(cTable);
 
-           let aTable = this.makeTable("/friends");
-            this.getView().byId("atab").addContent(aTable);
+           let aTable = this.makeTable("atable", "/friends");
+            //this.getView().byId("atab").addContent(aTable);
 
             this.getView().setModel(oModel);
 
@@ -51,8 +51,8 @@ sap.ui.define([
             return t.getContent()[1];
         },
 
-        makeTable: function (dpath) {
-
+        makeTable: function (idn, dpath) {
+/*
             var oTable = new sap.m.Table( {
                 mode: "SingleSelect",
                 columns: [
@@ -60,6 +60,7 @@ sap.ui.define([
                     new sap.m.Column({ header: new Text({ text: "Lasr Name" }) })
                 ]
             });
+*/ var oTable = this.getView().byId(idn);
 
             oTable.setIncludeItemInSelection(true);
             oTable.bActiveHeaders = true;
