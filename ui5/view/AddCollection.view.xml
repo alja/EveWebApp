@@ -17,14 +17,14 @@
                                 <Text text="Supplier" />
                             </Column>
                         </columns>
-                        <items>
+                        <!--items>
                             <ColumnListItem>
                                 <cells>
                                     <Text text="{firstName}" />
                                     <Text text="{lastName}" />
                                 </cells>
                             </ColumnListItem>
-                        </items>
+                        </items-->
                     </Table>
 
                 </content>
