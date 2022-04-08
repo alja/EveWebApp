@@ -1,12 +1,13 @@
-<mvc:View controllerName="custom.controller.AddCollection" 
+<mvc:View controllerName="custom.controller.AddCollection"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns="sap.m">
 <Dialog id="acdialog" contentHeight="100%" contentWidth="50%" title="AddCollection">
-    <TabContainer id="tt" class="sapUiResponsiveContentPadding ">
+    <IconTabBar id="tt" class="sapUiResponsiveContentPadding ">
         <items>
-            <TabContainerItem id="ctab" name="EDM Collection">
+            <IconTabFilter id="ctab" icon="sap-icon://tree" count="10" text="EDM Collection" >
+
                 <content>
-                    <SearchField id="csr" class="sapUiSizeCompact" placeholder="Filter" search=".onFilterPost"/>
+                    <SearchField id="csr" class="sapUiSizeCompact" placeholder="Filter"   search=".onFilterPost"/>
 
                     <Table id="ctable" mode="SingleSelect">
                         <columns>
@@ -26,10 +27,11 @@
                             </ColumnListItem>
                         </items-->
                     </Table>
+                    <Input/>
 
                 </content>
-            </TabContainerItem>
-            <TabContainerItem id="atab" name="Association">
+            </IconTabFilter>
+            <IconTabFilter id="atab" icon="sap-icon://share-2" count="10" text="Association">
                 <content>
                     <SearchField id="asr" class="sapUiSizeCompact" placeholder="Filter" search=".onFilterPost"/>
                     <Table id="atable" mode="SingleSelect">
@@ -41,19 +43,19 @@
                                 <Text text="Supplier" />
                             </Column>
                         </columns>
-                        <items>
+                        <!--items>
                             <ColumnListItem>
                                 <cells>
                                     <Text text="{firstName}" />
                                     <Text text="{lastName}" />
                                 </cells>
                             </ColumnListItem>
-                        </items>
+                        </items-->
                     </Table>
                 </content>
-            </TabContainerItem>
+            </IconTabFilter>
         </items>
-    </TabContainer>
+    </IconTabBar>
     <!--footer>
             <OverflowToolbar>
                 <ToolbarSpacer/>
@@ -63,5 +65,5 @@
             </OverflowToolbar>
         </footer-->
 
-</Dialog>
+    </Dialog>
 </mvc:View>

@@ -23,7 +23,7 @@ sap.ui.define([
 
            let aTable = this.makeTable("atable", "/friends");
             //this.getView().byId("atab").addContent(aTable);
-
+            this.getView().byId("atab").setCount(12);
             this.getView().setModel(oModel);
 
             this.dialog = this.getView().byId("acdialog");
@@ -45,8 +45,8 @@ sap.ui.define([
 
         getTable: function()
         {
-            let tt = this.getView().byId("tt");
-            let si = tt.getSelectedItem();
+            let tt = this.getView().byId("ttab");
+            let si = tt.key();
             let t = this.getView().byId(si);
             return t.getContent()[1];
         },
