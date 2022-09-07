@@ -8,5 +8,5 @@
 ```
 ### Run test
 ```
-root.exe collection_proxies_test.C
+root.exe pointTest.C
 ```
