@@ -420,8 +420,8 @@ private:
                               x + a + RND_BOX(d), y + a + RND_BOX(d), z + a + RND_BOX(d),
                               x + a + RND_BOX(d), y - a + RND_BOX(d), z + a + RND_BOX(d) };
          boxset->AddBox(verts);
-         boxset->DigitId(h);
-         boxset->DigitColor(item->GetVisible() ? collection->GetMainColor() : 0); // set color on the last one
+         // boxset->DigitId(h);
+         // boxset->DigitColor(item->GetVisible() ? collection->GetMainColor() : 0); // set color on the last one
       }
       boxset->GetPlex()->Refit();
       boxset->StampObjProps();

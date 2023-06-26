@@ -23,8 +23,8 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
          SummaryController.prototype.event(lst);
          oTree.expandToLevel(0);
       },
-
-      createModel: function() {
+/*
+      createSummaryModel: function() {
          // this is central method now to create summary model
          // one could select top main element which will be shown in SummaryView
 
@@ -46,7 +46,7 @@ sap.ui.define(['rootui5/eve7/controller/Summary.controller',
 		  }
 
        //  return this.createSummaryModel([], src, "/");
-      },
+      },*/
 
 
       showGedEditor: function(elementId) {
