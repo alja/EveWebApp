@@ -96,13 +96,30 @@
            <Button id="nextEvent" icon="sap-icon://media-play"
                    press="nextEvent" />
 
+            <Label text="AutoPlay:">
+               <layoutData>
+                  <OverflowToolbarLayoutData priority="Disappear" shrinkable="true" minWidth="40px" />
+               </layoutData>
+            </Label>
+            <CheckBox id="autoplayId" class="sapUiNoMarginRight" select="autoplay">
+               <layoutData>
+                  <OverflowToolbarLayoutData priority="Low" shrinkable="true" minWidth="40px" />
+               </layoutData>
+            </CheckBox>
+            <Slider id="playdelayId" value="500" min="0" max="2000" width="6em" change="playdelay" showAdvancedTooltip="true" class="sapUiNoMargin">
+               <layoutData>
+                  <OverflowToolbarLayoutData priority="Disappear" shrinkable="true" minWidth="40px" />
+               </layoutData>
+            </Slider>
+
             <ToolbarSpacer />
-            <Label id="runLabel" text="Run" />
-            <Input id="runInput" width="100px"  />
-            <Label id="lumiLabel" text="Lumi" />
-            <Input id="lumiInput" width="100px" />
-            <Label id="event" text="Event"/>
-            <Input id="eventInput" width="100px" />
+
+            <Label id="runLabel" text="Run "  class="sapUiTinyMargin"/>
+            <Input id="runInput" width="7em" submit="goToEvent" value="10" class="sapUiTinyMargin"/>
+            <Label id="lumiLabel" text="Lumi " />
+            <Input id="lumiInput" width="5em" submit="goToEvent" value="10" class="sapUiTinyMargin"/>
+            <Label id="event" text="Event "/>
+            <Input id="eventInput" width="7em" submit="goToEvent" value="10" class="sapUiTinyMargin"/>
            <Button text="TestFilter" press="testXML"/>
             <ToolbarSpacer />
             <Label id="dateLabel" />

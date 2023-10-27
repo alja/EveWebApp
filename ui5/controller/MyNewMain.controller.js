@@ -92,10 +92,12 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
 
       showEventInfo : function() {
          document.title = "ABC: " + this.fw2gui.fname + " " + this.fw2gui.eventCnt + "/" + this.fw2gui.size;
+         /*
+         // AMT displabled: not connected with the EventManager streaming
          this.byId("runInput").setValue(this.fw2gui.run);
          this.byId("lumiInput").setValue(this.fw2gui.lumi);
          this.byId("eventInput").setValue(this.fw2gui.event);
-
+         */
          this.byId("dateLabel").setText(this.fw2gui.date);
       },
 
@@ -127,6 +129,22 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
                pthis.eventFilter.openFilterDialog();
             });
          }
+      },
+
+      autoplay: function (oEvent) {
+         console.log("AUTO", oEvent.getParameter("selected"));
+         this.mgr.SendMIR("autoplay(" + oEvent.getParameter("selected") + ")", this.fw2gui.fElementId, "EventManager");
+      },
+
+      playdelay: function (oEvent) {
+         console.log("playdelay ", oEvent.getParameters());
+         this.mgr.SendMIR("playdelay(" + oEvent.getParameter("value") + ")", this.fw2gui.fElementId, "EventManager");
+      },
+
+      goToEvent: function (oEvent) {
+         console.log("goto event run = ", this.byId("runInput").getValue());
+         let cmd = "goToRunEvent(" + this.byId("runInput").getValue() + ", " + this.byId("lumiInput").getValue() + ", " + this.byId("eventInput").getValue() + ")";
+         this.mgr.SendMIR(cmd, this.fw2gui.fElementId, "EventManager");
       },
 
       onPressInvMass: function(oEvent)
