@@ -20,11 +20,6 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
          //this.mgr.
          console.log("register my controller for init");
          this.mgr.RegisterController(this);
-
-
-         let sth =  $("#nextEvent");
-         console.log("st jquery ", $("#nextEvent").position());
-         console.log("st jquery ", sth.offset());
       },
 
 
