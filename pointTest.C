@@ -13,36 +13,7 @@
 
 using namespace ROOT::Experimental;
 
-class EventManager : public REveElement
-{
-private:
-   bool m_autoplay{false};
-
-public:
-   void autoplay(bool x)
-   {
-      std::cout << "EventMaanger autoplay() ....... " << x << std::endl;
-   }
-
-   void playdelay(float x)
-   {
-      printf("EventManager playdelay() %f .... \n", x);
-   }
-   void goToRunEvent(int runId, int eventId, int lumiId)
-   {
-      printf("Got to event %d %d %d\n", runId, eventId, lumiId);
-   }
-
-   void FileDialogSaveAs(char *path)
-   {
-      printf("dialog path %s \n", path);
-   }
-};
-
-
-//----------------------------------------------
-
-REvePointSet *createPointSet(int npoints = 2, float s = 200, int color = 28)
+REvePointSet *createPointSet(int npoints = 100, float s = 200, int color = 28)
 {
    TRandom &r = *gRandom;
 
@@ -70,10 +41,76 @@ REvePointSet *createPointSet(int npoints = 2, float s = 200, int color = 28)
 
    return ps;
 }
+// -----------------------------------------------
+
+class EventManager : public REveElement
+{
+private:
+   bool m_autoplay{false};
+
+   int run{100};
+   int lumi{200};
+   int event{300};
+
+public:
+   void autoplay(bool x)
+   {
+      std::cout << "EventMaanger autoplay() ....... " << x << std::endl;
+   }
+
+   void playdelay(float x)
+   {
+      printf("EventManager playdelay() %f .... \n", x);
+   }
+  
+   void goToRunEvent(int runId, int eventId, int lumiId)
+   {
+      printf("Got to event %d %d %d\n", runId, eventId, lumiId);
+      run = runId;
+      event = eventId;
+      lumi = lumiId;
+
+      StampObjProps();
+   }
+
+   void FileDialogSaveAs(char *path)
+   {
+      printf("dialog path %s \n", path);
+   }
+
+   void NextEvent()
+   {
+      auto es = gEve->GetEventScene();
+      es->DestroyElements();
+      es->AddElement(createPointSet());   
+
+      event++;
+      printf("EventManager::NextEvent event = %d\n", event);
+      StampObjProps(); // stamp to stream changes
+   }
+
+   Int_t WriteCoreJson(nlohmann::json &j, Int_t rnr_offset) override
+   {
+      Int_t ret = REveElement::WriteCoreJson(j, rnr_offset);
+      j["UT_PostStream"] = "UT_refresh_event_info"; // this defuines GUI callback on the client
+      j["run"]   = run;
+      j["lumi"]  = lumi;
+      j["event"] = event;
+
+      std::cout << "json dump " << j.dump(3) << "\n";
+      return ret;
+   }
+};
+
+
+//----------------------------------------------
 
 void pointTest()
 {
    auto eveMng = REveManager::Create();
+
+   // disable unique auth key for dec purposes 
+   eveMng->AllowMultipleRemoteConnections(false, false);
    gEnv->SetValue("WebGui.HttpPort", 7799);
    std::string locPath = "ui5";
    eveMng->AddLocation("mydir/", locPath);
