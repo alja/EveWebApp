@@ -58,7 +58,7 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
             // add a collback on the change
             var pthis = this;
             this.mgr.UT_refresh_event_info = function() {
-               console.log("jay ", world[last]);
+               console.log("located element ", world[last]);
                pthis.showEventInfo();
             }
 
@@ -85,8 +85,11 @@ sap.ui.define(['rootui5/eve7/controller/Main.controller',
       },
 
       showEventInfo : function() {
-         document.title = "ABC: " + this.fw2gui.fname + " " + this.fw2gui.eventCnt + "/" + this.fw2gui.size;
+         document.title = "ABC: " + this.fw2gui.fTitle;
          
+         var elem = this.byId("centerTitle");
+         elem.setHtmlText(this.fw2gui.fTitle);
+
          // AMT displabled: not connected with the EventManager streaming
          this.byId("runInput").setValue(this.fw2gui.run);
          this.byId("lumiInput").setValue(this.fw2gui.lumi);

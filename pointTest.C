@@ -92,7 +92,7 @@ public:
    Int_t WriteCoreJson(nlohmann::json &j, Int_t rnr_offset) override
    {
       Int_t ret = REveElement::WriteCoreJson(j, rnr_offset);
-      j["UT_PostStream"] = "UT_refresh_event_info"; // this defuines GUI callback on the client
+      j["UT_PostStream"] = "UT_refresh_event_info"; // this defines GUI callback on the client
       j["run"]   = run;
       j["lumi"]  = lumi;
       j["event"] = event;
@@ -117,7 +117,7 @@ void pointTest()
    eveMng->SetDefaultHtmlPage("file:mydir/eventDisplay.html");
 
    auto eventMng = new EventManager();
-   eventMng->SetNameTitle("GUI_EventManager", "GUIEM");
+   eventMng->SetNameTitle("EventManager", "Event Manager GUI");
 
    REveElement *event = eveMng->GetEventScene();
    auto ps = createPointSet(100);
